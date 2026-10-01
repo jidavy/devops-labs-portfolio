@@ -32,7 +32,7 @@ The `launch-wizard-1` security group allows:
 
 ### 3. Connect via SSH
 ```bash
-ssh -i dev_key.pem ec2-user@<PUBLIC_IP>
+ssh -i key.pem ec2-user@<PUBLIC_IP>
 ```
 Accepted the host fingerprint on first connection.
 
