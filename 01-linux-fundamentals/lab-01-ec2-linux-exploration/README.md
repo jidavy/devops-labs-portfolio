@@ -1,4 +1,4 @@
-# Lab 02 – Deploy an Nginx Web Server on AWS EC2
+# Lab 01 – Deploy an Nginx Web Server on AWS EC2
 
 ## Objective
 Launch an Amazon Linux 2023 EC2 instance, connect over SSH, install and enable Nginx, customise the default page, and confirm it is reachable from the public internet.
