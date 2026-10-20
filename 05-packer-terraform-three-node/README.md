@@ -36,8 +36,31 @@ Browser -> Java Spring Boot backend (port 9090, /vegetables)
 
 ## What I learned / problems solved
 
-(write a few lines in your own words, e.g. Packer builds are slow so parallel
-builds help; why the frontend needed a boot-time sed; the 404 on / was normal)
+## What I learned / problems solved
+
+- **Packer and Terraform do different jobs.** Packer builds the image (the
+  frozen disk); Terraform creates the running servers from it. I built two
+  AMIs and launched three servers from them: the Python and Java nodes use
+  the same backend image.
+- **Bake slow things in, configure fast things at boot.** Installing Java,
+  Maven and the Python libraries and compiling the jar took about 13 minutes,
+  so doing that once in the image keeps server start-up fast. The backend IPs
+  aren't known until Terraform creates the servers, so the frontend page is
+  patched at boot with `sed`.
+- **Terraform works out the order itself.** Because the frontend's boot script
+  uses the Python and Java IP addresses, Terraform built the two backends
+  first without me ordering anything.
+- **Look AMIs up by name, don't paste IDs.** A `data "aws_ami"` block finds
+  the newest `fruits-*` image, so a rebuild needs no code change.
+- **A 404 isn't always a failure.** The Java server returned 404 on `/`, which
+  only meant `/` isn't a route. The real endpoint, `/vegetables`, was in the
+  frontend's JavaScript, and `curl` plus `grep` helped me find it.
+- **Keep secrets out of Git.** `.terraform/`, state files, `*.tfvars` and key
+  files are all ignored. I also split the infrastructure code into its own
+  repo so it doesn't mix with the application.
+- **Small gotchas:** exported AWS credentials only last for one terminal
+  session, and `packer build` ran both images in parallel, with the Nginx one
+  finishing in under 6 minutes and the backend in nearly 13.
 
 ## Clean-up
 
