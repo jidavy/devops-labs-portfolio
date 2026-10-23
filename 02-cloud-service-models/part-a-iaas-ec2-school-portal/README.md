@@ -81,5 +81,3 @@ Opened `http://<PUBLIC_IP>` and the Techbleat Academy school portal loaded.
 ## Clean up
 Terminate the instance after the task to avoid charges.
 
-## Part B: PaaS
-_Coming next: deploying the same website on a PaaS platform._
